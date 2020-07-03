@@ -13,17 +13,7 @@ export const vredditID = (url: string): string | undefined => {
   return res[1];
 }
 
-export const getURLsFromMPD = (xml: string): string[] => {
-  const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(xml, 'text/xml');
-
-  return [].slice.call(
-    xmlDoc
-      .getElementsByTagName('BaseURL')
-  ).map(({ nodeValue }) => nodeValue);
-};
-
-export const getURLs = (url: string): Promise<string[]> => (
+export const getURLs = (url: string, opts: { resolveOnFirst: boolean } = { resolveOnFirst: false }): Promise<string[]> => (
   new Promise((resolve, reject) => {
     let id = vredditID(url);
 
@@ -32,22 +22,27 @@ export const getURLs = (url: string): Promise<string[]> => (
     }
 
     const qualities = [
-      '96',
-      '360',
-      '480',
-      '720',
       '1080',
+      '720',
+      '480',
+      '360',
+      '96',
     ];
     const urls = qualities.map((quality) => `https://v.redd.it/${id}/DASH_${quality}.mp4`);
 
     // dear lord, here we go
     const vid = document.createElement('video');
-    loadVideos(urls, [], vid, resolve);
+    loadVideos(urls, [], vid, resolve, opts);
 
   })
 );
 
-const loadVideos = (urls: string[], valid: string[], vid: HTMLVideoElement, resolve: (_: string[]) => void) => {
+// Recursively calls itself based on events from the past vid's loading. If it loads, we know
+// it's a good url, if it fails, we don't.
+//
+// If resolveOnFirst is true, we'll resolve on the first success with one URL. Otherwise,
+// we accumate URLs by walking all of urls before resolving.
+const loadVideos = (urls: string[], valid: string[], vid: HTMLVideoElement, resolve: (_: string[]) => void, opts: { resolveOnFirst: boolean }) => {
   const [url, ...rem] = urls;
   const once = { once: '' };
 
@@ -58,12 +53,12 @@ const loadVideos = (urls: string[], valid: string[], vid: HTMLVideoElement, reso
     const newURLs = [...valid, url];
     console.dir(newURLs);
 
-    if (rem.length === 0) {
+    if (rem.length === 0 || opts.resolveOnFirst) {
       return resolve(newURLs);
     }
 
     setTimeout(() => {
-      loadVideos(rem, newURLs, vid, resolve);
+      loadVideos(rem, newURLs, vid, resolve, opts);
     }, 500);
   };
 
@@ -77,11 +72,12 @@ const loadVideos = (urls: string[], valid: string[], vid: HTMLVideoElement, reso
     }
 
     setTimeout(() => {
-      if (once.once != e.type) {
+      // debounce since abort could fire with error.
+      if (once.once !== e.type) {
         return;
       }
 
-      loadVideos(rem, valid, vid, resolve);
+      loadVideos(rem, valid, vid, resolve, opts);
     }, 500);
   };
 
@@ -98,6 +94,8 @@ const loadVideos = (urls: string[], valid: string[], vid: HTMLVideoElement, reso
   );
 
   const clearVideo = () => {
+    // TypesScript doesn't allow src to be empty, even though
+    // it's perfectly fine and stops the video from loading.
     (vid as any).src = undefined;
   };
 
