@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6c79112d8df72967988322d30adbda5e",
+    "revision": "fa8941181873a786c975b31e44fcd21e",
     "url": "/vredditor/index.html"
   },
   {
