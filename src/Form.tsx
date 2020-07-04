@@ -66,7 +66,7 @@ const URLForm = ({
             placeholder="https://v.redd.it/asdf1234"
           />
           <Form.Text className="text-muted">
-            When viewing a reddit thread, copy the URL from the title and put it here.
+            Provide a comments link for a v.redd.it video or a v.redd.it video link.
           </Form.Text>
         </Form.Group>
         <Form.Group as={Col} md="12" lg="8">

@@ -13,28 +13,73 @@ export const vredditID = (url: string): string | undefined => {
   return res[1];
 }
 
-export const getURLs = (url: string, opts: { resolveOnFirst: boolean } = { resolveOnFirst: false }): Promise<string[]> => (
+export const getVRedditFromComments = (url: string): Promise<string> => (
+  new Promise((resolve, reject) => (
+    // Thank you cors anywhere for this awesome hack.
+    fetch(`//cors-anywhere.herokuapp.com/${url}`)
+      .then((r) => r.text())
+      .then((text) => {
+        const res = /(https:\/\/v\.redd\.it\/[A-Z0-9a-z]+)/.exec(text);
+
+        if (!res || res?.length < 2) {
+          reject(new Error('Failed to find v.redd.it url in link; is it a video?'));
+        } else {
+          resolve(res[1]);
+        }
+      })
+  ))
+);
+
+export const getURLsFromMPD = (xml: string): string[] => {
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(xml, 'text/xml');
+
+  return [].slice.call(
+    xmlDoc
+      .getElementsByTagName('BaseURL')
+  ).map(({ nodeValue }) => nodeValue);
+};
+
+const getVRedditFromUser = (url: string): Promise<string> => (
   new Promise((resolve, reject) => {
-    let id = vredditID(url);
-
-    if (id === undefined) {
-      reject(new Error('could not get id from vreddit url'));
+    if (/v\.redd\.it\/([A-Za-z0-9]+)/.test(url)) {
+      resolve(url);
+    } else if (/(m|old)?\.?reddit\.com\/r\/.*?\/comments/.test(url)) {
+      // comments link
+      getVRedditFromComments(url)
+        .then((urls) => resolve(urls))
+        .catch((err) => reject(err));
+    } else {
+      reject(new Error('Couldn\'t get a reddit link from that. Please email me@brod.es if this is a valid reddit link.'));
     }
-
-    const qualities = [
-      '1080',
-      '720',
-      '480',
-      '360',
-      '96',
-    ];
-    const urls = qualities.map((quality) => `https://v.redd.it/${id}/DASH_${quality}.mp4`);
-
-    // dear lord, here we go
-    const vid = document.createElement('video');
-    loadVideos(urls, [], vid, resolve, opts);
-
   })
+);
+
+export const getURLs = (url: string, opts: { resolveOnFirst: boolean } = { resolveOnFirst: false }): Promise<string[]> => (
+  new Promise((resolve, reject) => (
+    getVRedditFromUser(url)
+      .then((url) => {
+        let id = vredditID(url);
+
+        if (id === undefined) {
+          throw new Error('could not get id from vreddit url');
+        }
+
+        const qualities = [
+          '1080',
+          '720',
+          '480',
+          '360',
+          '96',
+        ];
+        const urls = qualities.map((quality) => `https://v.redd.it/${id}/DASH_${quality}.mp4`);
+
+        // dear lord, here we go
+        const vid = document.createElement('video');
+        loadVideos(urls, [], vid, resolve, opts);
+      })
+      .catch((err) => reject(err))
+  ))
 );
 
 // Recursively calls itself based on events from the past vid's loading. If it loads, we know
@@ -51,7 +96,6 @@ const loadVideos = (urls: string[], valid: string[], vid: HTMLVideoElement, reso
     clearVideo();
 
     const newURLs = [...valid, url];
-    console.dir(newURLs);
 
     if (rem.length === 0 || opts.resolveOnFirst) {
       return resolve(newURLs);
