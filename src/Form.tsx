@@ -66,7 +66,7 @@ const URLForm = ({
             placeholder="https://v.redd.it/asdf1234"
           />
           <Form.Text className="text-muted">
-            Provide a comments link for a v.redd.it video or a v.redd.it video link.
+            Provide a direct v.redd.it link or reddit comments link.
           </Form.Text>
         </Form.Group>
         <Form.Group as={Col} md="12" lg="8">

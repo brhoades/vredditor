@@ -72,7 +72,11 @@ export const getURLs = (url: string, opts: { resolveOnFirst: boolean } = { resol
           '360',
           '96',
         ];
-        const urls = qualities.map((quality) => `https://v.redd.it/${id}/DASH_${quality}.mp4`);
+        const mp4Urls = qualities.map((quality) => `https://v.redd.it/${id}/DASH_${quality}.mp4`);
+        const urls = [
+          ...mp4Urls,
+          ...qualities.map((quality) => `https://v.redd.it/${id}/DASH_${quality}`)
+        ];
 
         // dear lord, here we go
         const vid = document.createElement('video');
