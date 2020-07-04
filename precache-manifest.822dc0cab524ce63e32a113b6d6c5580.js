@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fa8941181873a786c975b31e44fcd21e",
+    "revision": "1b8ce8a656d7459cac1789ab8d4a9f21",
     "url": "/vredditor/index.html"
   },
   {
-    "revision": "888a43763ea4d782caff",
+    "revision": "f1fd1771cb3a1b2ed09d",
     "url": "/vredditor/static/css/main.6e1f6c21.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/vredditor/static/js/2.c17d3a7c.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "888a43763ea4d782caff",
-    "url": "/vredditor/static/js/main.9a458a80.chunk.js"
+    "revision": "f1fd1771cb3a1b2ed09d",
+    "url": "/vredditor/static/js/main.528d887d.chunk.js"
   },
   {
     "revision": "37db4e0e1807f293f00c",

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/vredditor/precache-manifest.eb8876df911cd9967b8301e919ede858.js"
+  "/vredditor/precache-manifest.822dc0cab524ce63e32a113b6d6c5580.js"
 );
 
 self.addEventListener('message', (event) => {

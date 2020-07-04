@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/vredditor/static/css/main.6e1f6c21.chunk.css",
-    "main.js": "/vredditor/static/js/main.9a458a80.chunk.js",
-    "main.js.map": "/vredditor/static/js/main.9a458a80.chunk.js.map",
+    "main.js": "/vredditor/static/js/main.528d887d.chunk.js",
+    "main.js.map": "/vredditor/static/js/main.528d887d.chunk.js.map",
     "runtime-main.js": "/vredditor/static/js/runtime-main.54fb3479.js",
     "runtime-main.js.map": "/vredditor/static/js/runtime-main.54fb3479.js.map",
     "static/js/2.c17d3a7c.chunk.js": "/vredditor/static/js/2.c17d3a7c.chunk.js",
     "static/js/2.c17d3a7c.chunk.js.map": "/vredditor/static/js/2.c17d3a7c.chunk.js.map",
     "index.html": "/vredditor/index.html",
-    "precache-manifest.eb8876df911cd9967b8301e919ede858.js": "/vredditor/precache-manifest.eb8876df911cd9967b8301e919ede858.js",
+    "precache-manifest.822dc0cab524ce63e32a113b6d6c5580.js": "/vredditor/precache-manifest.822dc0cab524ce63e32a113b6d6c5580.js",
     "service-worker.js": "/vredditor/service-worker.js",
     "static/css/main.6e1f6c21.chunk.css.map": "/vredditor/static/css/main.6e1f6c21.chunk.css.map",
     "static/js/2.c17d3a7c.chunk.js.LICENSE.txt": "/vredditor/static/js/2.c17d3a7c.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.54fb3479.js",
     "static/js/2.c17d3a7c.chunk.js",
     "static/css/main.6e1f6c21.chunk.css",
-    "static/js/main.9a458a80.chunk.js"
+    "static/js/main.528d887d.chunk.js"
   ]
 }
