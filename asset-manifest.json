@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/vredditor/static/css/main.8f29bbea.chunk.css",
-    "main.js": "/vredditor/static/js/main.7706f348.chunk.js",
-    "main.js.map": "/vredditor/static/js/main.7706f348.chunk.js.map",
+    "main.js": "/vredditor/static/js/main.12c7383e.chunk.js",
+    "main.js.map": "/vredditor/static/js/main.12c7383e.chunk.js.map",
     "runtime-main.js": "/vredditor/static/js/runtime-main.8fe6f57d.js",
     "runtime-main.js.map": "/vredditor/static/js/runtime-main.8fe6f57d.js.map",
     "static/js/2.9a693899.chunk.js": "/vredditor/static/js/2.9a693899.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.8fe6f57d.js",
     "static/js/2.9a693899.chunk.js",
     "static/css/main.8f29bbea.chunk.css",
-    "static/js/main.7706f348.chunk.js"
+    "static/js/main.12c7383e.chunk.js"
   ]
 }
